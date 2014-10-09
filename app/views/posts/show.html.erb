@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @post.description %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+<div id="rating">Rate</div>
+<div id="avg_rating">Avg. Rating</div>
+
+<script>
+  $('#rating').raty({
+    score: <%= @rating.score %>,
+    path: '/assets',
+    click: function(score, evt) {
+      $.ajax({
+      	halfShow: true,
+        url: '/rating_stars/' + <%= @rating.id %>,
+        type: 'PATCH',
+        data: { score: score }
+      });
+    }
+  });
+
+  $('#avg_rating').raty({
+  readOnly: true,
+  halfShow: true,
+  score: <%= @post.average_rating %>,
+  path: '/assets'
+});
+
+  
+</script>
